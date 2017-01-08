@@ -1,15 +1,18 @@
 var map;
 var geocoder;
-var destinationCoordinates = {
-  lat: 40.716667,
-  lng: -74
-};
+var elements = [];
 
 function getPins() {
 
+  var city = $('input[name="city"]').val();
+  var country = $('input[name="country"]').val();
+  var startDate = $('input[name="startDate"]').val();
+  var endDate = $('input[name="endDate"]').val();
+
   $.ajax({
     type: 'GET',
-    url: 'http://localhost:8881/routes?city=Brussels&country=Belgium&month=AUGUST&year=2016',
+    url: 'http://localhost:8881/routes?city=' + city + '&country=' + country +
+      '&startDate=' + startDate + '&endDate=' + endDate,
     dataType: "json",
     xhrFields: {
       withCredentials: false
@@ -52,7 +55,10 @@ function getPins() {
 function initMap() {
 
   map = new google.maps.Map(document.getElementById('map'), {
-    center: destinationCoordinates,
+    center: {
+      lat: 40.716667,
+      lng: -74
+    },
     zoom: 4
   });
   geocoder = new google.maps.Geocoder();
